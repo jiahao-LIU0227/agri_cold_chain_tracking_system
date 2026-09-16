@@ -102,7 +102,8 @@ agri_cold_chain_tracking_system/
 │  ├─ classification.py      # POI 和停留类型分类
 │  ├─ deviation.py           # 偏航检测
 │  ├─ temperature.py         # 温度异常识别和轨迹关联
-│  └─ report.py              # 汇总统计和报告数据
+│  ├─ report.py              # 汇总统计和报告数据
+│  └─ pipeline.py            # 把「模拟 -> 分析 -> 入库」串成一条流程
 ├─ templates/
 │  └─ index.html             # 主页面，把高德 JS Key 注入进去
 ├─ static/
@@ -110,12 +111,15 @@ agri_cold_chain_tracking_system/
 │  ├─ fallback_map.js        # 断网时的简图模式
 │  └─ style.css
 ├─ tests/
-│  ├─ conftest.py
-│  ├─ test_segmentation.py
-│  ├─ test_classification.py
-│  ├─ test_deviation.py
-│  ├─ test_temperature.py
-│  └─ test_storage.py        # 需要连 MySQL 的测试单独放一个文件
+│  ├─ conftest.py            # 测试数据的构造工具，都按固定基准时刻造
+│  ├─ test_geo.py            # 距离和坐标换算（不需要数据库）
+│  ├─ test_segmentation.py   # 停走分段（不需要数据库）
+│  ├─ test_classification.py # 停留分类（不需要数据库）
+│  ├─ test_deviation.py      # 偏航检测（不需要数据库）
+│  ├─ test_temperature.py    # 温度异常（不需要数据库）
+│  ├─ test_simulator.py      # 模拟器（不需要数据库）
+│  ├─ test_storage.py        # 数据库读写（需要 MySQL）
+│  └─ test_api.py            # 接口（需要 MySQL）
 ├─ data/
 │  └─ cache/                 # 高德接口返回的路线和 POI，缓存文件可以提交
 └─ examples/
@@ -251,13 +255,17 @@ POI 从哪来：优先用高德“周边搜索”接口（`/v3/place/around`）�
 
 ### API
 
-- `POST /api/simulate`：生成一次模拟任务
-- `GET /api/tasks`：查询任务列表
+- `POST /api/simulate`：生成一次模拟任务（请求体可带 `task_id` / `seed` / `duration_s`）
+- `GET /api/tasks`：查询任务列表（带每个任务的轨迹点数）
+- `GET /api/tasks/<id>/route`：获取规划路线的折线点，地图上那条蓝线
 - `GET /api/tasks/<id>/track`：获取轨迹点
 - `GET /api/tasks/<id>/analysis`：获取分段、偏航、温度事件和统计
 - `GET /api/tasks/<id>/report`：获取报告所需 JSON 数据
 - `GET /api/config`：返回前端需要的高德 JS Key 和安全密钥
 - `GET /api/health`：检查 MySQL 是否连得上、高德 Key 是否配好，出问题时第一个查它
+
+路线和轨迹是两个接口，不能合并：规划路线来自高德，是用来做对比的基准线；
+轨迹是车实际走的。地图上要同时画出这两条线，偏航才看得懂。
 
 先保证 API 能返回 JSON，再做页面；这样前后端可以并行开发和调试。
 
@@ -317,7 +325,27 @@ POI 从哪来：优先用高德“周边搜索”接口（`/v3/place/around`）�
 
 每个算法函数先写测试，再接入 Flask；测试数据应固定随机种子，确保每次结果一致。
 
-**让测试变简单的一个关键点**：`segmentation`、`classification`、`deviation`、`temperature` 这四块都是纯函数——输入一堆轨迹点，输出一堆分段/事件，不碰数据库、不调高德接口。所以这四个测试文件不需要 MySQL 也不需要网络，`pytest` 直接就能跑。只有 `test_storage.py` 需要连数据库，给它单独准备一个 `cold_chain_test` 库，跑完清空。
+**让测试变简单的一个关键点**：`segmentation`、`classification`、`deviation`、`temperature` 这四块都是纯函数——输入一堆轨迹点，输出一堆分段/事件，不碰数据库、不调高德接口。所以这几块（还有 `geo` 和 `simulator`）的测试不需要 MySQL 也不需要网络，`pytest` 直接就能跑。只有 `test_storage.py` 和 `test_api.py` 需要连数据库，给它们单独准备一个 `cold_chain_test` 库，跑完删除。
+
+### 上面每条边界对应的测试
+
+跑 `pytest -q`，下面每一条都应该是绿的。报告里可以直接引这张表。
+
+| 边界情况 | 测试写在哪 |
+| --- | --- |
+| 40 秒红灯不应生成停留 | `test_segmentation.py::test_red_light_40s_is_not_a_stop`（另有一条连遇 8 次红灯的） |
+| 恰好 180 秒和 181 秒 | `test_segmentation.py::test_stop_of_exactly_T_MIN_counts`、`test_stop_one_second_shorter_does_not_count`、`test_stop_one_second_longer_counts` |
+| 单点、时间戳重复、定位点缺失 | `test_segmentation.py::test_single_point_track_does_not_crash`、`test_duplicate_timestamps_do_not_crash`、`test_bad_position_quality_does_not_crash` |
+| POI 边界上的点分类一致 | `test_classification.py::test_poi_boundary_is_inclusive`、`test_fence_radius_is_the_flip_point` |
+| 偏 500 米 8 分钟生成一个偏航段 | `test_deviation.py::test_500m_off_route_for_8_minutes_is_one_event` |
+| 温度恰好等于阈值 | `test_temperature.py::test_temperature_exactly_at_the_upper_limit_is_ok`、`test_temperature_exactly_at_the_lower_limit_is_ok`、`test_excursion_of_exactly_T_TEMP_is_ignored` |
+| 位置、温度、速度来自同一条记录 | `test_api.py::test_track_points_are_complete_records`、`test_each_record_carries_its_own_position_and_temperature` |
+| 同一距离算两次一致；向北 1000 米 ≈ 1000 米 | `test_geo.py::test_same_distance_computed_twice_is_identical`、`test_north_1000m_is_about_1000m` |
+
+还有两条值得单独说的：
+
+- `test_simulator.py::test_simulator_plants_cases_the_classifier_rediscovers`：模拟器知道标准答案（埋了红灯、加油、中途装卸、路边久停），分类算法只能看轨迹点、不许偷看那张表。两边独立算出来还能一一对上，才说明分析是真的成立——这是报告里最该写的一条验证。
+- `test_api.py::test_config_never_leaks_the_web_key`：守住「Web 服务 Key 只能留在后端」这条硬约束。
 
 ## 10. 小组分工建议
 
@@ -431,6 +459,18 @@ python run.py
 # 6. 跑测试
 pytest -q
 ```
+
+`pytest -q` 能用的前提是虚拟环境已经激活。Git Bash 里如果 `activate` 没生效，
+直接写全路径也一样，还能顺手把编码问题一起解决：
+
+```bash
+PYTHONIOENCODING=utf-8 PYTHONUTF8=1 ./.venv/Scripts/python.exe -m pytest -q
+```
+
+跑完应该看到 `168 passed`。这里面 52 条要连 MySQL（`test_storage.py` 和
+`test_api.py`），它们会自己建一个 `cold_chain_test` 库、跑完删掉，不碰开发库
+`cold_chain`。MySQL 没启动的话这两个文件会被跳过，其余测试照样跑完——
+算法部分的测试本来就不需要数据库。
 
 Windows 上用 `cp` 而不是 `copy`：`copy` 是 cmd 的内部命令，Git Bash 里没有。
 Git Bash 里 `cp` 和 PowerShell 里 `cp` 都能用，记一个就够。
