@@ -87,12 +87,14 @@ agri_cold_chain_tracking_system/
 ├─ config.py                 # 从环境变量读配置，带默认值
 ├─ sql/
 │  └─ schema.sql             # 建库建表语句，方便一键初始化
+├─ scripts/
+│  └─ seed_example.py        # 拉一条示例路线和 POI，写进 MySQL
 ├─ app/
 │  ├─ __init__.py
 │  ├─ routes.py              # 页面和 API 路由
 │  ├─ models.py              # dataclass 数据对象
 │  ├─ db.py                  # MySQL 连接的获取和释放
-│  ├─ storage.py             # 建表、增删查改（手写 SQL）
+│  ├─ storage.py             # 增删查改（手写 SQL，建表在 sql/schema.sql）
 │  ├─ amap.py                # 高德 Web 服务 API 封装 + 本地缓存
 │  ├─ geo.py                 # 距离计算和坐标系转换
 │  ├─ simulator.py           # 运输过程和温度变化模拟
@@ -414,17 +416,30 @@ python -m venv .venv
 pip install -r requirements.txt
 
 # 2. 配置环境变量（第一次做，之后不用重复）
-copy .env.example .env
+cp .env.example .env
 # 然后用编辑器打开 .env，填上数据库密码和高德 Key
 
 # 3. 初始化数据库
 mysql -u root -p < sql/schema.sql
 
-# 4. 启动
+# 4. 导入示例数据（路线 + POI + 一条任务）
+python scripts/seed_example.py
+
+# 5. 启动
 python run.py
 
-# 5. 跑测试
+# 6. 跑测试
 pytest -q
+```
+
+Windows 上用 `cp` 而不是 `copy`：`copy` 是 cmd 的内部命令，Git Bash 里没有。
+Git Bash 里 `cp` 和 PowerShell 里 `cp` 都能用，记一个就够。
+
+跑脚本时控制台中文变乱码，是 Windows 控制台默认用 GBK 编码显示，
+Python 输出的是 UTF-8。加个环境变量就好，代码本身没问题：
+
+```bash
+PYTHONIOENCODING=utf-8 python scripts/seed_example.py
 ```
 
 `config.py` 读取环境变量的写法（用 `python-dotenv` 加载 `.env`）：

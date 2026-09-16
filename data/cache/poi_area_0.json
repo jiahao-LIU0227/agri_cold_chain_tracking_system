@@ -1,0 +1,93 @@
+{
+  "suggestion": {
+    "keywords": [],
+    "cities": []
+  },
+  "count": "2",
+  "infocode": "10000",
+  "pois": [
+    {
+      "parent": [],
+      "distance": "3100",
+      "keytag": "服务区",
+      "importance": [],
+      "biz_ext": {
+        "cost": [],
+        "opentime2": [],
+        "rating": [],
+        "open_time": []
+      },
+      "type": "道路附属设施;服务区;高速加油站服务区",
+      "photos": [],
+      "building": [],
+      "typecode": "180301",
+      "shopinfo": "2",
+      "poiweight": [],
+      "adname": "朝阳区",
+      "featured_reviews_remake": [],
+      "tel": [],
+      "id": "B0FFI9ZYIR",
+      "address": "朝阳区",
+      "space_num": [],
+      "pname": "北京市",
+      "biz_type": [],
+      "cityname": "北京市",
+      "childtype": [],
+      "atag": [],
+      "name": "加油站",
+      "location": "116.488518,39.871779",
+      "shopid": [],
+      "favorite_num": [],
+      "featured_reviews": []
+    },
+    {
+      "parent": [],
+      "distance": "3133",
+      "keytag": "服务区",
+      "importance": [],
+      "biz_ext": {
+        "cost": [],
+        "opentime2": [],
+        "rating": [],
+        "open_time": []
+      },
+      "type": "道路附属设施;服务区;高速加油站服务区",
+      "photos": [
+        {
+          "title": [],
+          "url": "http://store.is.autonavi.com/showpic/200c93746a484c0dd39d69730ef0d3b2"
+        },
+        {
+          "title": [],
+          "url": "https://store.is.autonavi.com/showpic/816025be97aada6b38f51fb664bfa905"
+        },
+        {
+          "title": [],
+          "url": "https://store.is.autonavi.com/showpic/0b09da6d9fcb1b97b0897f1539aa5e6e"
+        }
+      ],
+      "building": [],
+      "typecode": "180301",
+      "shopinfo": "2",
+      "poiweight": [],
+      "adname": "朝阳区",
+      "featured_reviews_remake": [],
+      "tel": [],
+      "id": "B000A81GPB",
+      "address": "十八里店",
+      "space_num": [],
+      "pname": "北京市",
+      "biz_type": [],
+      "cityname": "北京市",
+      "childtype": [],
+      "atag": [],
+      "name": "服务区",
+      "location": "116.477242,39.841078",
+      "shopid": [],
+      "favorite_num": [],
+      "featured_reviews": []
+    }
+  ],
+  "status": "1",
+  "info": "OK"
+}

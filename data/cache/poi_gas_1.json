@@ -1,0 +1,200 @@
+{
+  "suggestion": {
+    "keywords": [],
+    "cities": []
+  },
+  "count": "6",
+  "infocode": "10000",
+  "pois": [
+    {
+      "parent": [],
+      "distance": "1394",
+      "keytag": "加油站",
+      "importance": [],
+      "biz_ext": {
+        "cost": [],
+        "opentime2": "周一至周日 00:00-24:00",
+        "rating": "4.3",
+        "open_time": "24小时营业"
+      },
+      "type": "汽车服务;加油站;中国石化",
+      "photos": [
+        {
+          "title": [],
+          "url": "https://aos-comment.amap.com/B0FFK2DUR6/headerImg/fe5a877c4d2497aa22b23a945517afc7_2048_2048_80.jpg"
+        },
+        {
+          "title": [],
+          "url": "https://aos-comment.amap.com/B0FFK2DUR6/headerImg/b9dca171db58e278124cf9f814bb5544_2048_2048_80.jpg"
+        },
+        {
+          "title": [],
+          "url": "https://aos-comment.amap.com/B0FFK2DUR6/headerImg/9154a21356777b7f87fbf79cb4073eb4_2048_2048_80.jpg"
+        }
+      ],
+      "building": [],
+      "typecode": "010101",
+      "shopinfo": "1",
+      "poiweight": [],
+      "adname": "大兴区",
+      "featured_reviews_remake": [],
+      "tel": "010-80200061",
+      "id": "B0FFK2DUR6",
+      "address": "采育镇大里庄",
+      "space_num": [],
+      "pname": "北京市",
+      "biz_type": [],
+      "cityname": "北京市",
+      "childtype": [],
+      "atag": [],
+      "name": "中国石化大里庄加油站",
+      "location": "116.692535,39.641998",
+      "shopid": [],
+      "favorite_num": [],
+      "featured_reviews": []
+    },
+    {
+      "parent": [],
+      "distance": "4503",
+      "keytag": "加油站",
+      "importance": [],
+      "biz_ext": {
+        "cost": [],
+        "opentime2": "周一至周日 05:00-24:00",
+        "rating": "4.2",
+        "open_time": "05:00-24:00"
+      },
+      "type": "汽车服务;加油站;中国石化",
+      "photos": [
+        {
+          "title": [],
+          "url": "http://store.is.autonavi.com/showpic/900b54e8504adb4637f6018ab6026b0f"
+        },
+        {
+          "title": [],
+          "url": "http://store.is.autonavi.com/showpic/da3c391aba82c9d7ca9053a6ebc7b9b2"
+        },
+        {
+          "title": [],
+          "url": "http://store.is.autonavi.com/showpic/4f1d2ddbd3ce3e256ca15d2cb37113ec"
+        }
+      ],
+      "building": [],
+      "typecode": "010101",
+      "shopinfo": "1",
+      "poiweight": [],
+      "adname": "通州区",
+      "featured_reviews_remake": [],
+      "tel": "010-80521562",
+      "id": "B0FFG415T5",
+      "address": "张凤路与柏德路交叉口",
+      "space_num": [],
+      "pname": "北京市",
+      "biz_type": [],
+      "cityname": "北京市",
+      "childtype": [],
+      "atag": [],
+      "name": "中国石化渠头加油站",
+      "location": "116.728422,39.681707",
+      "shopid": [],
+      "favorite_num": [],
+      "featured_reviews": []
+    },
+    {
+      "parent": [],
+      "distance": "4660",
+      "keytag": "加油站",
+      "importance": [],
+      "biz_ext": {
+        "cost": [],
+        "opentime2": "周一至周日 00:00-24:00",
+        "rating": "4.8",
+        "open_time": "24小时营业"
+      },
+      "type": "汽车服务;加油站;中国石化",
+      "photos": [
+        {
+          "title": [],
+          "url": "https://aos-comment.amap.com/B000A95CMA/comment/553D8E2E_BA74_492A_B03F_F65D16F9402E_L0_001_1179_878_1733187631604_39124706.jpg"
+        },
+        {
+          "title": [],
+          "url": "https://store.is.autonavi.com/showpic/37af6c8f902dbf760000002402600910?type=pic"
+        },
+        {
+          "title": [],
+          "url": "http://store.is.autonavi.com/showpic/ae7471e03840d835feccf1961d356efa"
+        }
+      ],
+      "building": [],
+      "typecode": "010101",
+      "shopinfo": "1",
+      "poiweight": [],
+      "adname": "大兴区",
+      "featured_reviews_remake": [],
+      "tel": "010-80202347",
+      "id": "B000A95CMA",
+      "address": "采育镇庙营村委会东200米",
+      "space_num": [],
+      "pname": "北京市",
+      "biz_type": [],
+      "cityname": "北京市",
+      "childtype": [],
+      "atag": [],
+      "name": "中国石化凤河营二站加油站",
+      "location": "116.692048,39.612507",
+      "shopid": [],
+      "favorite_num": [],
+      "featured_reviews": []
+    },
+    {
+      "parent": [],
+      "distance": "4918",
+      "keytag": "加油站",
+      "importance": [],
+      "biz_ext": {
+        "cost": [],
+        "opentime2": "周一至周日 00:00-24:00",
+        "rating": "4.5",
+        "open_time": "24小时营业"
+      },
+      "type": "汽车服务;加油站;中国石化",
+      "photos": [
+        {
+          "title": [],
+          "url": "http://aos-cdn-image.amap.com/sns/ugccomment/79bb6005-acf7-4e0c-80d5-1c15e11a51d3.jpg"
+        },
+        {
+          "title": [],
+          "url": "http://store.is.autonavi.com/showpic/58ba062732a361654cc85d018271a30d"
+        },
+        {
+          "title": [],
+          "url": "https://aos-comment.amap.com/B000A95CL9/comment/1643775687140_temp.jpg"
+        }
+      ],
+      "building": [],
+      "typecode": "010101",
+      "shopinfo": "1",
+      "poiweight": [],
+      "adname": "大兴区",
+      "featured_reviews_remake": [],
+      "tel": "010-80271577",
+      "id": "B000A95CL9",
+      "address": "采育镇京福路中国石化采育加油站",
+      "space_num": [],
+      "pname": "北京市",
+      "biz_type": [],
+      "cityname": "北京市",
+      "childtype": [],
+      "atag": [],
+      "name": "中国石化采育加油站",
+      "location": "116.633879,39.644197",
+      "shopid": [],
+      "favorite_num": [],
+      "featured_reviews": []
+    }
+  ],
+  "status": "1",
+  "info": "OK"
+}

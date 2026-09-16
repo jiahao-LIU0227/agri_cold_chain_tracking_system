@@ -1,0 +1,200 @@
+{
+  "suggestion": {
+    "keywords": [],
+    "cities": []
+  },
+  "count": "39",
+  "infocode": "10000",
+  "pois": [
+    {
+      "parent": [],
+      "distance": "474",
+      "keytag": "加油站",
+      "importance": [],
+      "biz_ext": {
+        "cost": [],
+        "opentime2": "周一至周日 00:00-24:00",
+        "rating": "4.1",
+        "open_time": "24小时营业"
+      },
+      "type": "汽车服务;加油站;中国石油",
+      "photos": [
+        {
+          "title": [],
+          "url": "https://store.is.autonavi.com/showpic/f78a53397364d59a0000003486646661"
+        },
+        {
+          "title": [],
+          "url": "https://store.is.autonavi.com/showpic/bb1435c640af881a0000003453644571"
+        },
+        {
+          "title": [],
+          "url": "https://store.is.autonavi.com/showpic/4d253cf29f91d96a0000003486658728"
+        }
+      ],
+      "building": [],
+      "typecode": "010102",
+      "shopinfo": "0",
+      "poiweight": [],
+      "adname": "朝阳区",
+      "featured_reviews_remake": [],
+      "tel": "010-87710908",
+      "id": "B000A83KJE",
+      "address": "左安路与东三环南路辅路交叉口西南角(十里河地铁站E口对面)",
+      "space_num": [],
+      "pname": "北京市",
+      "biz_type": [],
+      "cityname": "北京市",
+      "childtype": [],
+      "atag": [],
+      "name": "中国石油华云洁加油站",
+      "location": "116.457233,39.866452",
+      "shopid": [],
+      "favorite_num": [],
+      "featured_reviews": []
+    },
+    {
+      "parent": [],
+      "distance": "717",
+      "keytag": "加油站",
+      "importance": [],
+      "biz_ext": {
+        "cost": [],
+        "opentime2": "周一至周日 00:00-24:00",
+        "rating": "4.3",
+        "open_time": "24小时营业"
+      },
+      "type": "汽车服务;加油站;中国石化",
+      "photos": [
+        {
+          "title": [],
+          "url": "https://store.is.autonavi.com/showpic/ac3d3c7e87fa888fa229342e22d9e650"
+        },
+        {
+          "title": [],
+          "url": "http://store.is.autonavi.com/showpic/76c60b2df21d1b22f9ccd3e29ede22c2"
+        },
+        {
+          "title": [],
+          "url": "https://store.is.autonavi.com/showpic/d38a04b917bcc90c0000002428950070"
+        }
+      ],
+      "building": [],
+      "typecode": "010101",
+      "shopinfo": "1",
+      "poiweight": [],
+      "adname": "丰台区",
+      "featured_reviews_remake": [],
+      "tel": "010-67692392",
+      "id": "B000A64211",
+      "address": "南三环东路13号",
+      "space_num": [],
+      "pname": "北京市",
+      "biz_type": [],
+      "cityname": "北京市",
+      "childtype": [],
+      "atag": [],
+      "name": "中国石化分钟寺加油站",
+      "location": "116.447014,39.859485",
+      "shopid": [],
+      "favorite_num": [],
+      "featured_reviews": []
+    },
+    {
+      "parent": [],
+      "distance": "872",
+      "keytag": "加油站",
+      "importance": [],
+      "biz_ext": {
+        "cost": [],
+        "opentime2": "周一至周日 00:00-24:00",
+        "rating": "4.7",
+        "open_time": "24小时营业"
+      },
+      "type": "汽车服务;加油站;中国石化",
+      "photos": [
+        {
+          "title": [],
+          "url": "https://store.is.autonavi.com/showpic/e1a4d380d9469bcd38cc361a2b2d1826"
+        },
+        {
+          "title": [],
+          "url": "https://store.is.autonavi.com/showpic/fa99ce9cc86140d4a9857ab135e9c541"
+        },
+        {
+          "title": [],
+          "url": "http://store.is.autonavi.com/showpic/76c6e1beb7187ed468e4d0f8a7b79921"
+        }
+      ],
+      "building": [],
+      "typecode": "010101",
+      "shopinfo": "1",
+      "poiweight": [],
+      "adname": "朝阳区",
+      "featured_reviews_remake": [],
+      "tel": "010-87381260",
+      "id": "B000A698F9",
+      "address": "东南三环路十里河(十里河地铁站A东北口步行280米)",
+      "space_num": [],
+      "pname": "北京市",
+      "biz_type": [],
+      "cityname": "北京市",
+      "childtype": [],
+      "atag": [],
+      "name": "中国石化十里河加油站",
+      "location": "116.461465,39.868367",
+      "shopid": [],
+      "favorite_num": [],
+      "featured_reviews": []
+    },
+    {
+      "parent": [],
+      "distance": "1024",
+      "keytag": "加油站",
+      "importance": [],
+      "biz_ext": {
+        "cost": [],
+        "opentime2": "周一至周日 00:00-24:00",
+        "rating": "4.5",
+        "open_time": "24小时营业"
+      },
+      "type": "汽车服务;加油站;中国石化",
+      "photos": [
+        {
+          "title": [],
+          "url": "https://store.is.autonavi.com/showpic/9a7fdfc7bd4432010000004030242402?type=pic"
+        },
+        {
+          "title": [],
+          "url": "http://aos-cdn-image.amap.com/sns/ugccomment/7decced8-fc48-4bfc-b820-6097a72e36d5.jpg"
+        },
+        {
+          "title": [],
+          "url": "https://aos-comment.amap.com/B000A81KHR/comment/content_media_external_file_97838_ss__1771048326180_79933757.jpg"
+        }
+      ],
+      "building": [],
+      "typecode": "010101",
+      "shopinfo": "1",
+      "poiweight": [],
+      "adname": "丰台区",
+      "featured_reviews_remake": [],
+      "tel": "010-67626682",
+      "id": "B000A81KHR",
+      "address": "成寿寺方庄桥南东侧200米",
+      "space_num": [],
+      "pname": "北京市",
+      "biz_type": [],
+      "cityname": "北京市",
+      "childtype": [],
+      "atag": [],
+      "name": "中国石化成寿寺加油站",
+      "location": "116.443679,39.858392",
+      "shopid": [],
+      "favorite_num": [],
+      "featured_reviews": []
+    }
+  ],
+  "status": "1",
+  "info": "OK"
+}

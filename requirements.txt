@@ -1,0 +1,15 @@
+# 农产品冷链途迹监测系统 - 依赖清单
+#
+# 安装：
+#     pip install -r requirements.txt
+#
+# 环境：Python 3.14.6（全组统一，不要各写各的）
+# 数据库：MySQL 8.0+，驱动用 PyMySQL（纯 Python，Windows 上不用编译）
+
+Flask
+PyMySQL
+python-dotenv
+requests
+shapely
+pandas
+pytest
