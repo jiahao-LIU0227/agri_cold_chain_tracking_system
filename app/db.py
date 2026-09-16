@@ -90,10 +90,20 @@ def executemany(sql, seq_of_params):
 
 
 def ping():
-    """检查数据库是否连得上。返回 (是否正常, 说明文字)。"""
+    """检查数据库是否连得上。返回 (是否正常, 说明文字)。
+
+    连接可能因为 MySQL 重启之类的原因断掉，所以先探一下。断了就丢掉旧连接
+    换一条新的——不然健康检查会一直报错，非得重启服务才能恢复。
+    """
     try:
         conn = get_db()
-        conn.ping(reconnect=True)
+        try:
+            conn.ping()
+        except Exception:
+            g.pop("db", None)      # 这条已经废了，扔掉
+            conn = get_db()        # 换条新的再探
+            conn.ping()
+
         row = query_one("SELECT VERSION() AS v, DATABASE() AS d")
         return True, f"MySQL {row['v']}，当前库 {row['d']}"
     except Exception as exc:

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>农产品冷链途迹监测系统</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <h1>农产品冷链途迹监测系统</h1>
+  <div class="topbar-actions">
+    <label for="task-select">运输任务</label>
+    <select id="task-select"></select>
+    <button id="btn-simulate" type="button">生成示例数据</button>
+    <span id="busy" class="busy" hidden>处理中…</span>
+  </div>
+</header>
+
+<!-- 地图加载不出来时，这里会出现一条提示，其余功能照常 -->
+<div id="map-notice" class="notice" hidden></div>
+
+<main class="layout">
+
+  <section class="map-panel">
+    <div id="map"></div>
+    <canvas id="fallback-canvas" hidden></canvas>
+
+    <div class="playback">
+      <button id="btn-play" type="button" class="primary">播放</button>
+      <input id="timeline" type="range" min="0" max="0" value="0" step="1">
+      <span id="clock" class="clock">--:--</span>
+      <div class="speeds" id="speeds">
+        <button type="button" data-speed="1" class="active">1×</button>
+        <button type="button" data-speed="2">2×</button>
+        <button type="button" data-speed="4">4×</button>
+        <button type="button" data-speed="8">8×</button>
+      </div>
+    </div>
+  </section>
+
+  <aside class="side">
+
+    <section class="card">
+      <h2>当前状态</h2>
+      <dl class="now">
+        <dt>时间</dt><dd id="now-time">--</dd>
+        <dt>速度</dt><dd id="now-speed">--</dd>
+        <dt>温度</dt><dd id="now-temp">--</dd>
+        <dt>制冷机</dt><dd id="now-fridge">--</dd>
+        <dt>车门</dt><dd id="now-door">--</dd>
+        <dt>状态</dt><dd id="now-state">--</dd>
+        <dt>位置</dt><dd id="now-pos" class="mono">--</dd>
+      </dl>
+    </section>
+
+    <section class="card">
+      <h2>运输统计</h2>
+      <div class="stats" id="stats"></div>
+    </section>
+
+    <section class="card">
+      <h2>温度曲线</h2>
+      <canvas id="temp-chart" height="140"></canvas>
+      <p class="legend">
+        <span class="swatch ok"></span>允许范围
+        <span class="swatch bad"></span>超限
+        <span class="swatch line"></span>车厢温度
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>异常事件 <span id="event-count" class="badge">0</span></h2>
+      <ul id="event-list" class="events"></ul>
+    </section>
+
+    <section class="card">
+      <h2>停留构成</h2>
+      <ul id="stop-list" class="stops"></ul>
+    </section>
+
+    <section class="card">
+      <h2>结论建议</h2>
+      <ul id="conclusions" class="conclusions"></ul>
+    </section>
+
+  </aside>
+</main>
+
+<script src="/static/fallback_map.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>
