@@ -105,7 +105,7 @@ agri_cold_chain_tracking_system/
 │  ├─ report.py              # 汇总统计和报告数据
 │  └─ pipeline.py            # 把「模拟 -> 分析 -> 入库」串成一条流程
 ├─ templates/
-│  └─ index.html             # 主页面，把高德 JS Key 注入进去
+│  └─ index.html             # 主页面骨架，地图容器在这儿
 ├─ static/
 │  ├─ app.js                 # 地图、回放和图表交互
 │  ├─ fallback_map.js        # 断网时的简图模式
@@ -420,20 +420,24 @@ __pycache__/
 
 2. **`AMAP_WEB_KEY` 只能在后端使用。** 它带着你的配额，泄露出去别人可以拿去刷接口。它只出现在 `app/amap.py` 里，不经过任何接口返回给前端。
 
-3. **`AMAP_JS_KEY` 藏不住，也不需要藏。** 它必须出现在页面源码里浏览器才能加载地图，这是官方设计如此。正确的做法是去高德控制台给它配置**域名白名单**（本地开发填 `localhost`，上线填你的域名），这样别人拿到 Key 也用不了。
+3. **`AMAP_JS_KEY` 藏不住，也不需要藏。** 它最终一定会进到浏览器里（不然地图加载不出来），打开开发者工具就能看到，这是官方设计如此。正确做法是去高德控制台给它配置**域名白名单**（本地开发填 `localhost`，上线填你的域名），这样别人拿到 Key 也用不了。
+
+> **本地开发最容易卡住的一步**：`run.py` 绑的是 `127.0.0.1`，而白名单里通常只填了 `localhost`——这两个在高德那边算**不同的域名**。所以要么用 `http://localhost:5000` 打开页面，要么去白名单里把 `127.0.0.1` 也加上。不匹配的表现是页面顶部出现「地图加载失败，已切换简图模式」，功能都还在，但地图出不来。
 
 4. **前端通过 `/api/config` 拿 JS Key，不要写死在 `app.js` 里。** 这样换 Key 不用改前端代码，而且 `AMAP_WEB_KEY` 不会被误带出去。
 
-高德开放平台的安全密钥配置方式（在加载 JS API 之前设置）：
+安全密钥必须在 JS API 脚本加载**之前**挂到 `window` 上，顺序反了会鉴权失败。本项目是在 `static/app.js` 里动态加载高德脚本的——先取配置，挂上安全密钥，再插入 `<script>`：
 
-```html
-<script>
-  window._AMapSecurityConfig = {
-    securityJsCode: "{{ amap_security_code }}"
-  };
-</script>
-<script src="https://webapi.amap.com/maps?v=2.0&key={{ amap_js_key }}"></script>
+```javascript
+window._AMapSecurityConfig = { securityJsCode: cfg.amap_js_security_code };
+
+var script = document.createElement("script");
+script.src = "https://webapi.amap.com/maps?v=2.0&key=" +
+             encodeURIComponent(cfg.amap_js_key);
+document.head.appendChild(script);
 ```
+
+之所以不在 `index.html` 里用 Jinja 直接渲染，是因为 Key 只在 `/api/config` 这一个地方出，页面模板里看不到任何密钥，改 Key 也不用动模板。加载失败（断网、Key 过期、域名不在白名单）时 `app.js` 会捕获并切到简图模式，不会白屏。
 
 ## 13. 开发运行约定
 
