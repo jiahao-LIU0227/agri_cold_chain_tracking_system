@@ -26,7 +26,7 @@ sys.path.insert(0, BASE_DIR)
 
 from app import create_app, storage                                   # noqa: E402
 from app.amap import AmapError, clear_cache, fetch_driving_route, search_around_pois  # noqa: E402
-from app.geo import haversine                                        # noqa: E402
+from app.geo import RoutePath, haversine                             # noqa: E402
 from app.models import (CARGO_FROZEN, POI_GAS_STATION, POI_LOADING_DOCK,  # noqa: E402
                         POI_SERVICE_AREA, Poi, TransportTask)
 
@@ -56,10 +56,28 @@ POI_MAX_OFFSET_M = 1000
 
 # 手写的 POI。高德分类里没有「中途装卸点」这种类别，
 # 而停留分类算法需要它，所以手动补两个。
+#
+# 位置不写死经纬度，而是写成「沿路线走到百分之几、再往路边偏多少米」。
+# 这样路线变了它们还是贴着路线。偏 120 米既像「仓库就在路边」，
+# 又落在 200 米的围栏和偏航阈值里面，停车本身不会被判成偏航。
 MANUAL_POIS = [
-    {"name": "武清中转仓", "poi_type": POI_LOADING_DOCK, "latitude": 39.4520, "longitude": 116.9200},
-    {"name": "廊坊卸货点", "poi_type": POI_LOADING_DOCK, "latitude": 39.5380, "longitude": 116.7300},
+    {"name": "武清中转仓", "poi_type": POI_LOADING_DOCK, "at_ratio": 0.62, "offset_m": 120},
+    {"name": "廊坊卸货点", "poi_type": POI_LOADING_DOCK, "at_ratio": 0.38, "offset_m": -120},
 ]
+
+
+def build_manual_pois(path):
+    """按「沿线比例 + 横向偏移」算出两个手写 POI 的经纬度。"""
+    pois = []
+    for m in MANUAL_POIS:
+        at_m = path.total_length_m * m["at_ratio"]
+        base_lat, base_lng, _ = path.position_at(at_m)
+        lat, lng = path.offset_point(base_lat, base_lng, m["offset_m"],
+                                     path.normal_angle_at(at_m))
+        pois.append(Poi(name=m["name"], poi_type=m["poi_type"],
+                        latitude=lat, longitude=lng,
+                        radius_m=200, source="manual"))
+    return pois
 
 
 def pick_points_on_route(points, ratios):
@@ -136,10 +154,8 @@ def build_sample(refresh=False):
         locked = saved
         print(f"改用本地兜底文件: {len(route['points'])} 个折线点, {len(pois)} 个 POI")
 
-    pois += [Poi(name=m["name"], poi_type=m["poi_type"],
-                 latitude=m["latitude"], longitude=m["longitude"],
-                 radius_m=200, source="manual")
-             for m in MANUAL_POIS]
+    path = RoutePath(route["points"])
+    pois += build_manual_pois(path)
 
     return route, pois, locked
 

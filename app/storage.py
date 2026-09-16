@@ -117,24 +117,31 @@ def count_track_points(task_id: int):
     return row["n"]
 
 
+def delete_track_points(task_id: int):
+    """删掉某个任务的轨迹点。重新模拟之前要先清掉上一次的。"""
+    return db.execute("DELETE FROM track_point WHERE task_id = %s", (task_id,))
+
+
 # ============================================================
 # 分段
 # ============================================================
 
-def insert_segments(task_id: int, segments):
-    """批量写入分段结果。"""
-    params = [
-        (task_id, s.segment_type, s.stop_type, s.start_ts, s.end_ts, s.duration_s,
-         s.start_lat, s.start_lng, s.end_lat, s.end_lng, s.distance_m, s.avg_speed)
-        for s in segments
-    ]
-    return db.executemany(
+def insert_segment(task_id: int, segment: Segment):
+    """写入一个分段，返回它的 id。
+
+    分段一次只有十几条，所以一条一条插。这样能拿到自增 id，
+    后面事件表要用 segment_id 指回分段，才能从事件反查「当时停在干什么」。
+    """
+    return db.insert(
         """
         INSERT INTO segment (task_id, segment_type, stop_type, start_ts, end_ts, duration_s,
                              start_lat, start_lng, end_lat, end_lng, distance_m, avg_speed)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """,
-        params,
+        (task_id, segment.segment_type, segment.stop_type,
+         segment.start_ts, segment.end_ts, segment.duration_s,
+         segment.start_lat, segment.start_lng, segment.end_lat, segment.end_lng,
+         segment.distance_m, segment.avg_speed),
     )
 
 
@@ -144,6 +151,11 @@ def get_segments(task_id: int):
         "SELECT * FROM segment WHERE task_id = %s ORDER BY start_ts", (task_id,)
     )
     return [Segment.from_row(r) for r in rows]
+
+
+def delete_segments(task_id: int):
+    """删掉某个任务的分段。重新分析之前要先清掉上次的结果。"""
+    return db.execute("DELETE FROM segment WHERE task_id = %s", (task_id,))
 
 
 # ============================================================
@@ -178,6 +190,11 @@ def get_events(task_id: int, event_type=None):
         params.append(event_type)
     sql += " ORDER BY start_ts"
     return [Event.from_row(r) for r in db.query_all(sql, tuple(params))]
+
+
+def delete_events(task_id: int):
+    """删掉某个任务的事件。事件是每次分析算出来的，重算前先清空。"""
+    return db.execute("DELETE FROM event WHERE task_id = %s", (task_id,))
 
 
 # ============================================================

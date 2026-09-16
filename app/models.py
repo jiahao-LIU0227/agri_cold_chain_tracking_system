@@ -17,6 +17,7 @@ SEGMENT_STOP = "stop"
 # ---- 停留类型 ----
 STOP_LOAD = "load"          # 装货
 STOP_UNLOAD = "unload"      # 卸货
+STOP_TRANSFER = "transfer"  # 中途装卸，路上在别的仓库过一手货
 STOP_REFUEL = "refuel"      # 加油
 STOP_REST = "rest"          # 休息
 STOP_ABNORMAL = "abnormal"  # 异常停留
@@ -39,6 +40,7 @@ POI_OTHER = "other"
 STOP_TYPE_NAMES = {
     STOP_LOAD: "装货",
     STOP_UNLOAD: "卸货",
+    STOP_TRANSFER: "中途装卸",
     STOP_REFUEL: "加油",
     STOP_REST: "休息",
     STOP_ABNORMAL: "异常停留",

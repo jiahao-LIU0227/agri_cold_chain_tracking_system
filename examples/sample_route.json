@@ -3266,8 +3266,8 @@
   {
    "name": "武清中转仓",
    "poi_type": "loading_dock",
-   "latitude": 39.452,
-   "longitude": 116.92,
+   "latitude": 39.56834965011448,
+   "longitude": 116.82110187359646,
    "radius_m": 200,
    "source": "manual",
    "amap_id": null
@@ -3275,8 +3275,8 @@
   {
    "name": "廊坊卸货点",
    "poi_type": "loading_dock",
-   "latitude": 39.538,
-   "longitude": 116.73,
+   "latitude": 39.692941447274116,
+   "longitude": 116.64067528907601,
    "radius_m": 200,
    "source": "manual",
    "amap_id": null

@@ -111,7 +111,9 @@ CREATE TABLE segment (
     end_lng      DECIMAL(10,7) NOT NULL COMMENT '终点经度',
     distance_m   DECIMAL(10,2) NOT NULL DEFAULT 0 COMMENT '该段行驶距离 米',
     avg_speed    DECIMAL(6,2)  NOT NULL DEFAULT 0 COMMENT '平均速度 米/秒',
-    KEY idx_task_start (task_id, start_ts)
+    KEY idx_task_start (task_id, start_ts),
+    CONSTRAINT fk_segment_task FOREIGN KEY (task_id)
+        REFERENCES task(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='停走分段结果';
 
 
